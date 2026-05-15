@@ -5,46 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shaxriyor</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 
-body{
+*{
 margin:0;
-padding:20px;
-font-family:sans-serif;
-background:linear-gradient(180deg,#07131a,#123847);
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(180deg,#050b12,#0b1c29,#122b3c);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:25px;
 color:white;
+overflow:hidden;
+}
+
+.bg1,.bg2{
+position:fixed;
+border-radius:50%;
+filter:blur(90px);
+z-index:0;
+}
+
+.bg1{
+width:260px;
+height:260px;
+background:#00c3ff;
+top:-80px;
+left:-80px;
+}
+
+.bg2{
+width:250px;
+height:250px;
+background:#0066ff;
+bottom:-80px;
+right:-80px;
 }
 
 .card{
+width:100%;
+max-width:420px;
 background:rgba(255,255,255,0.08);
-padding:25px;
-border-radius:30px;
-margin-bottom:25px;
-backdrop-filter:blur(10px);
-box-shadow:0 0 20px rgba(0,0,0,0.4);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(18px);
+padding:30px;
+border-radius:35px;
+box-shadow:0 0 40px rgba(0,0,0,0.45);
+position:relative;
+z-index:2;
+animation:show 1s ease;
+}
+
+@keyframes show{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.profile{
+width:120px;
+height:120px;
+border-radius:50%;
+margin:auto;
+display:block;
+object-fit:cover;
+border:4px solid rgba(255,255,255,0.2);
+box-shadow:0 0 25px rgba(0,195,255,0.5);
 }
 
 h1{
 text-align:center;
-font-size:50px;
+font-size:38px;
+margin-top:18px;
+font-weight:700;
 }
 
-h2{
-font-size:40px;
-margin-bottom:20px;
+.bio{
+text-align:center;
+opacity:0.7;
+margin-top:8px;
+font-size:14px;
+}
+
+.line{
+width:100%;
+height:1px;
+background:rgba(255,255,255,0.08);
+margin:25px 0;
 }
 
 .btn{
 display:flex;
 align-items:center;
 gap:15px;
-background:rgba(255,255,255,0.08);
-padding:20px;
-border-radius:20px;
-margin-top:15px;
+width:100%;
 text-decoration:none;
+background:rgba(255,255,255,0.08);
+padding:18px 20px;
+border-radius:22px;
+margin-top:15px;
 color:white;
+font-size:17px;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.05);
+}
+
+.btn:hover{
+transform:scale(1.03);
+background:rgba(255,255,255,0.14);
+box-shadow:0 0 25px rgba(0,195,255,0.25);
+}
+
+.icon{
 font-size:22px;
+}
+
+.card-number{
+line-height:1.7;
+}
+
+audio{
+width:100%;
+margin-top:25px;
+border-radius:20px;
+}
+
+.footer{
+text-align:center;
+margin-top:25px;
+opacity:0.5;
+font-size:13px;
 }
 
 </style>
@@ -52,39 +157,54 @@ font-size:22px;
 
 <body>
 
+<div class="bg1"></div>
+<div class="bg2"></div>
+
 <div class="card">
+
+<img class="profile" src="https://i.imgur.com/2DhmtJ4.jpeg">
+
 <h1>Shaxriyor</h1>
-</div>
 
-<div class="card">
+<p class="bio">
+Silent soul • Cold heart • Premium vibe
+</p>
 
-<h2>Contact</h2>
+<div class="line"></div>
 
-<a class="btn" href="tel:+998886722302">
-📞 +998 88 672 23 01
+<a class="btn" href="tel:+998901234567">
+<span class="icon">📞</span>
+<span>+998 88 672 23 01</span>
 </a>
 
 <a class="btn" href="https://t.me/shahr1k08">
-✈ Telegram
+<span class="icon">✈</span>
+<span>Telegram</span>
 </a>
 
 <a class="btn" href="https://www.instagram.com/shahr1k__08?igsh=MTlnM2w0eGJ2M2JsZQ==">
-📷 Instagram
+<span class="icon">📷</span>
+<span>Instagram</span>
 </a>
 
-<div class="btn">
-💳 5614 6829 1392 1443
-
-<br><br>
-
-👤 Shaxriyor Axmatov
-</div>
-
+<div class="btn card-number">
+<span class="icon">💳</span>
+<span>
+9860 0803 0768 2643
+<br>
+Shaxriyor Axmatov
+</span>
 </div>
 
 <audio controls autoplay loop>
 <source src="Ravyn Lenae - Love Me Not.mp3" type="audio/mpeg">
 </audio>
+
+<div class="footer">
+Created by Shaxriyor
+</div>
+
+</div>
 
 </body>
 </html>
