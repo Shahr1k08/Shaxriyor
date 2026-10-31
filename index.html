@@ -1,184 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shaxriyor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You - Zulfiya</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #050505;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+        /* Yulduzli fon uchun */
+        canvas#bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-<style>
+        /* Asosiy konteyner */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+        /* Konvert / Kartochka dizayni */
+        .card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid #e056fd;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(224, 86, 253, 0.4);
+            backdrop-filter: blur(5px);
+            transition: all 0.5s ease;
+        }
 
-body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#05010d;
-overflow:hidden;
-padding:20px;
-color:white;
-}
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #ff7675;
+        }
 
-.bg1{
-position:fixed;
-width:500px;
-height:500px;
-background:#7b2cff;
-filter:blur(140px);
-opacity:0.35;
-top:-150px;
-left:-150px;
-}
+        .heart {
+            font-size: 3rem;
+            color: #ff7675;
+            animation: pulse 1.5s infinite;
+        }
 
-.bg2{
-position:fixed;
-width:450px;
-height:450px;
-background:#00aeff;
-filter:blur(140px);
-opacity:0.25;
-bottom:-150px;
-right:-150px;
-}
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
 
-.card{
-width:100%;
-max-width:430px;
-background:rgba(14,10,30,0.78);
-border:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
-padding:32px 28px;
-border-radius:35px;
-position:relative;
-z-index:2;
-box-shadow:
-0 0 40px rgba(123,44,255,0.25),
-0 0 60px rgba(0,174,255,0.12);
-}
+        /* Tugma */
+        button {
+            background: transparent;
+            border: 2px solid #ff7675;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
 
-h1{
-text-align:center;
-font-size:52px;
-font-weight:700;
-background:linear-gradient(90deg,#b56dff,#4dcfff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-letter-spacing:1px;
-}
+        button:hover {
+            background: #ff7675;
+            box-shadow: 0 0 15px #ff7675;
+        }
 
-.bio{
-text-align:center;
-margin-top:12px;
-font-size:14px;
-color:#9ea7d8;
-}
-
-.line{
-height:1px;
-background:rgba(255,255,255,0.08);
-margin:28px 0;
-}
-
-.btn{
-display:flex;
-align-items:center;
-gap:15px;
-padding:19px 20px;
-margin-top:17px;
-border-radius:22px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.05);
-text-decoration:none;
-color:white;
-font-size:18px;
-transition:0.35s;
-}
-
-.btn:hover{
-transform:translateY(-3px);
-background:rgba(255,255,255,0.08);
-box-shadow:
-0 0 18px rgba(123,44,255,0.35),
-0 0 25px rgba(0,174,255,0.2);
-}
-
-.icon{
-font-size:22px;
-}
-
-.footer{
-text-align:center;
-margin-top:24px;
-font-size:13px;
-color:#7278a8;
-}
-
-</style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MNFKSNEN"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'G-N7MNFKSNEN');
-</script>
+        /* Ism chiqadigan qism */
+        #display-text {
+            display: none;
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff7675, #e056fd, #74b9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(224, 86, 253, 0.6);
+            letter-spacing: 3px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="bg1"></div>
-<div class="bg2"></div>
+    <!-- Fon uchun canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-<div class="card">
+    <div class="container">
+        <div class="card" id="card-box">
+            <div class="heart">❤️</div>
+            <h1>FOR YOU</h1>
+            <button onclick="startAnimation()">Ko'rish uchun bosing</button>
+        </div>
+        <div id="display-text">Zulfiya</div>
+    </div>
 
-<h1>Shaxriyor</h1>
+    <script>
+        // Yulduzli fon animatsiyasi
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
 
-<p class="bio">
-Luxury • Silent • No Fake Vibes
-</p>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-<div class="line"></div>
+        const stars = [];
+        for (let i = 0; i < 150; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                alpha: Math.random(),
+                speed: Math.random() * 0.02
+            });
+        }
 
-<a class="btn" href="tel:+998886722301">
-<span class="icon">📞</span>
-<span>+998 88 672 23 01</span>
-</a>
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.globalAlpha = star.alpha;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
 
-<a class="btn" href="https://t.me/shahr1k08">
-<span class="icon">✈</span>
-<span>Telegram</span>
-</a>
+        // Tugma bosilgandagi amal
+        function startAnimation() {
+            const cardBox = document.getElementById('card-box');
+            const displayText = document.getElementById('display-text');
 
-<a class="btn" href="https://www.instagram.com/shahr1k__08?igsh=MTlnM2w0eGJ2M2JsZQ==">
-<span class="icon">📷</span>
-<span>Instagram</span>
-</a>
+            // Konvert yo'qoladi
+            cardBox.style.transform = 'scale(0)';
+            cardBox.style.opacity = '0';
 
-<div class="btn">
-<span class="icon">💳</span>
-<span>9860 1666 5522 9085</span>
-</div>
-
-<div class="btn">
-<span class="icon">👤</span>
-<span>Shaxriyor Axmatov</span>
-</div>
-
-
-
-<div class="footer">
-Created by Shaxriyor
-</div>
-
-</div>
-
+            setTimeout(() => {
+                cardBox.style.display = 'none';
+                // Ism chiqib keladi
+                displayText.style.display = 'block';
+                displayText.style.animation = 'fadeIn 2s ease-in-out';
+            }, 500);
+        }
+    </script>
 </body>
 </html>
